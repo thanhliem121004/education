@@ -17,6 +17,7 @@ import {
   clearAllCustomTopicImagesForTopic,
   saveCustomTopicSlotImage
 } from "../lib/mediaStorage.js";
+import ImagePicker from "../components/ImagePicker.jsx";
 
 export default function MediaAdmin() {
   const { showToast, mine } = useApp();
@@ -28,6 +29,8 @@ export default function MediaAdmin() {
   const [cfg, setCfg] = useState(getSupabaseConfig());
   const [testing, setTesting] = useState(false);
   const [connStatus, setConnStatus] = useState(null);
+  /* Kho ảnh Internet (Wikimedia Commons): đang chọn cho bài nào, ô nào */
+  const [picker, setPicker] = useState(null); // {topic, slotIdx}
 
   /* Listener để tự động cập nhật lại UI khi có thay đổi ảnh */
   const [, setTick] = useState(0);
@@ -220,6 +223,14 @@ export default function MediaAdmin() {
                                 style={{ display: "none" }}
                               />
                             </label>
+                            <button
+                              type="button"
+                              className="btn-url"
+                              title="Tìm ảnh tự do bản quyền (Wikimedia Commons)"
+                              onClick={() => setPicker({ topic, slotIdx })}
+                            >
+                              <Icon name="search" size={15} /> Kho ảnh
+                            </button>
                             <button 
                               className="btn-url" 
                               title="Nhập link ảnh online"
@@ -319,6 +330,18 @@ export default function MediaAdmin() {
             </ol>
           </div>
         </div>
+      )}
+
+      {picker && (
+        <ImagePicker
+          initialQuery={picker.topic.title.replace(/^(Tả|Kể về|Kể lại|Nêu|Thuật lại|Viết thư cho|Nói và viết về)\s+(một|lại|về)?\s*/i, "").replace(/\s*\(.*\)$/, "")}
+          onClose={() => setPicker(null)}
+          onPick={(img) => {
+            saveCustomTopicSlotImage(picker.topic.id, picker.slotIdx, img.large);
+            showToast(`Đã gắn ảnh từ kho vào ô ${picker.slotIdx}. Nguồn: Wikimedia Commons${img.license ? " · " + img.license : ""}.`);
+            setPicker(null);
+          }}
+        />
       )}
     </div>
   );

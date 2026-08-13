@@ -59,17 +59,14 @@ export default function App() {
   return (
     <AppCtx.Provider value={ctx}>
       <Topbar />
-      <AnimatePresence mode="wait">
-        <motion.main
-          key={route.name + (route.grade || "") + (route.topic?.id || "")}
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -14 }}
-          transition={{ duration: 0.28, ease: "easeOut" }}
-        >
-          {screens[route.name] || screens.home}
-        </motion.main>
-      </AnimatePresence>
+      <motion.main
+        key={route.name + (route.grade || "") + (route.topic?.id || "")}
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.28, ease: "easeOut" }}
+      >
+        {screens[route.name] || screens.home}
+      </motion.main>
 
       <footer className="site">
         Vườn Ý Tưởng — công cụ dạy học Tập làm văn: gợi mở, không áp đặt · Dành cho giáo viên Tiểu học (lớp 1–5)
