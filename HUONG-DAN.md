@@ -45,15 +45,56 @@ rồi mở `http://localhost:5173`.
 - Xem theo tuần (Thứ Hai → Thứ Bảy), bấm **＋ Thêm tiết dạy**: tiết, lớp (4A, 5B...), chọn bài (chủ đề mẫu hoặc giáo án của bạn), ghi chú.
 - Từ ô lịch bấm **Mở bài dạy** để chiếu ngay; đánh dấu **✓ Đã dạy**; **In lịch báo giảng**.
 
-## Đưa lên mạng bằng Vercel
+## Quản lý ảnh & Supabase Storage
 
-1. Đưa thư mục dự án lên GitHub (hoặc chạy `npx vercel` ngay trong thư mục).
-2. Vào [vercel.com](https://vercel.com) → **Add New Project** → chọn kho → Vercel tự nhận
-   framework **Vite** (build `npm run build`, output `dist`) → bấm **Deploy**.
-3. Nhận đường dẫn `https://ten-du-an.vercel.app`.
+Nút **Quản lý ảnh** trên thanh menu cho phép thay ảnh của từng bài dạy (tải tệp lên hoặc dán URL),
+khôi phục ảnh mặc định 1 chạm. Ảnh lưu ở đâu:
 
-> Bản hiện tại lưu giáo án/lịch **trên từng máy** (kèm xuất/nhập tệp).
-> Muốn đăng nhập và đồng bộ mọi nơi cần thêm cơ sở dữ liệu (Vercel Postgres/Supabase) — giai đoạn sau.
+- **Chưa cấu hình Supabase:** ảnh lưu ngay trên trình duyệt (localStorage) — chạy được cả khi offline,
+  nhưng chỉ máy đó thấy.
+- **Đã cấu hình Supabase:** ảnh tải lên đám mây, **mọi người dùng website đều thấy chung**.
+
+### Tạo kho ảnh Supabase (làm 1 lần, ~5 phút)
+
+1. Vào [supabase.com](https://supabase.com) → tạo tài khoản miễn phí → **New project**.
+2. Menu **Storage** → **New bucket** → đặt tên đúng là `vuon-y-tuong` → bật **Public bucket** → Create.
+3. Cho phép tải ảnh lên bucket: menu **SQL Editor** → dán và chạy:
+
+   ```sql
+   create policy "Cho phep tai anh len" on storage.objects
+     for insert to anon with check (bucket_id = 'vuon-y-tuong');
+   create policy "Cho phep ghi de anh" on storage.objects
+     for update to anon using (bucket_id = 'vuon-y-tuong');
+   ```
+
+   > Lưu ý: chính sách này cho phép **bất kì ai mở website** cũng thay được ảnh (phù hợp công cụ lớp học).
+   > Muốn chỉ mình giáo viên thay ảnh thì sau này thêm đăng nhập Supabase Auth.
+
+4. Lấy khoá: **Project Settings → API** → copy **Project URL** và **anon public key**.
+5. Đưa khoá vào app theo 1 trong 2 cách:
+   - **Cách A (cho cả trường dùng chung):** khai báo trên Vercel → Settings → Environment Variables:
+     `VITE_SUPABASE_URL` và `VITE_SUPABASE_ANON_KEY` → Redeploy. Người dùng không cần cấu hình gì.
+   - **Cách B (từng máy):** mở website → **Quản lý ảnh** → tab **Cấu hình Supabase** → dán URL + Key → Lưu.
+
+## Đưa lên mạng: GitHub → Vercel
+
+1. Tạo kho trống trên [github.com/new](https://github.com/new) (Public hoặc Private đều được, **không** tick thêm README).
+2. Trong thư mục dự án:
+
+   ```bash
+   git remote add origin https://github.com/<tai-khoan>/<ten-kho>.git
+   ```
+
+   ```bash
+   git push -u origin main
+   ```
+
+3. Vào [vercel.com](https://vercel.com) → **Add New Project** → Import kho GitHub → Vercel tự nhận
+   framework **Vite** → thêm 2 biến môi trường Supabase ở bước cấu hình (nếu dùng Cách A) → **Deploy**.
+4. Nhận đường dẫn `https://ten-du-an.vercel.app` — gửi cho đồng nghiệp dùng ngay.
+
+> Giáo án/lịch dạy hiện lưu **trên từng máy** (kèm xuất/nhập tệp); ảnh bài dạy đã đồng bộ chung qua Supabase.
+> Muốn đồng bộ cả giáo án/lịch theo tài khoản → giai đoạn sau (Supabase Database + Auth).
 
 ## Cấu trúc mã nguồn
 
