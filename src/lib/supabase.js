@@ -56,12 +56,14 @@ export async function uploadToSupabase(file, filePath) {
 
   const bucket = cfg.bucket || DEFAULT_BUCKET;
   
-  // Tải file lên Supabase Storage
+  // Tải file lên Supabase Storage.
+  // upsert: false — tên tệp đã kèm timestamp nên không bao giờ trùng;
+  // nhờ vậy chỉ cần quyền INSERT (không đòi quyền UPDATE/ghi đè).
   const { data, error } = await client.storage
     .from(bucket)
     .upload(filePath, file, {
       cacheControl: "3600",
-      upsert: true
+      upsert: false
     });
 
   if (error) throw error;
