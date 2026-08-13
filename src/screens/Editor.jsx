@@ -9,7 +9,6 @@ export default function Editor({ base, presetGrade }) {
   const fileRef = useRef(null);
 
   const [grade, setGrade] = useState(base ? base.grade : (presetGrade || 4));
-  const [emoji, setEmoji] = useState(base?.emoji || "");
   const [title, setTitle] = useState(base ? (editingId ? base.title : base.title + " (bản của tôi)") : "");
   const [genre, setGenre] = useState(base?.genre || "");
   const [intro, setIntro] = useState(base?.intro || "");
@@ -61,7 +60,7 @@ export default function Editor({ base, presetGrade }) {
       id: editingId || ("my-" + Date.now()),
       custom: true,
       grade: Number(grade),
-      emoji: emoji.trim() || "📖",
+      emoji: base?.emoji || "📖",
       title: title.trim(),
       genre: genre.trim() || "Tập làm văn",
       intro: intro.trim(),
@@ -107,9 +106,6 @@ export default function Editor({ base, presetGrade }) {
             <select value={grade} onChange={(e) => setGrade(e.target.value)}>
               {[1, 2, 3, 4, 5].map((g) => <option key={g} value={g}>Lớp {g}</option>)}
             </select>
-          </label>
-          <label className="ef-field w-s">Biểu tượng dự phòng
-            <input type="text" value={emoji} maxLength={4} placeholder="🐱" onChange={(e) => setEmoji(e.target.value)} />
           </label>
           <label className="ef-field w-l">Tên bài dạy *
             <input type="text" value={title} required placeholder="VD: Tả con đường từ nhà đến trường" onChange={(e) => setTitle(e.target.value)} />
@@ -163,8 +159,6 @@ export default function Editor({ base, presetGrade }) {
             <span className="ef-label">Nhóm từ ngữ gợi ý</span>
             {groups.map((g, i) => (
               <div className="ef-wordgroup" key={i}>
-                <input type="text" className="g-icon" value={g.icon} placeholder="Emoji"
-                  onChange={(e) => setGroups(groups.map((x, j) => j === i ? { ...x, icon: e.target.value } : x))} />
                 <input type="text" className="g-name" value={g.name} placeholder="Tên nhóm từ (VD: Màu sắc)"
                   onChange={(e) => setGroups(groups.map((x, j) => j === i ? { ...x, name: e.target.value } : x))} />
                 <button type="button" className="g-del" onClick={() => setGroups(groups.filter((_, j) => j !== i))}>Bỏ nhóm</button>

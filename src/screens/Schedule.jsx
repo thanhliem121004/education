@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import TOPICS from "../data/index.js";
 import { useApp } from "../App.jsx";
+import Icon from "../components/Icon.jsx";
 import { gGet, gSet, mondayOf, dkey, dshort, DAY_NAMES } from "../lib/core.js";
 
 export default function Schedule() {
@@ -69,7 +70,7 @@ export default function Schedule() {
                       <button onClick={() => {
                         const next = { ...schedule, [key]: entries.map((x, k) => k === j ? { ...x, done: !x.done } : x) };
                         setSchedule(next);
-                      }}>{entry.done ? "Chưa dạy" : "✓ Đã dạy"}</button>
+                      }}>{entry.done ? "Chưa dạy" : <><Icon name="check" size={13} /> Đã dạy</>}</button>
                       <button onClick={() => {
                         const rest = entries.filter((_, k) => k !== j);
                         const next = { ...schedule };

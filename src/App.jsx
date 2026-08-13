@@ -8,6 +8,7 @@ import MyTopics from "./screens/MyTopics.jsx";
 import Editor from "./screens/Editor.jsx";
 import Schedule from "./screens/Schedule.jsx";
 import MediaAdmin from "./screens/MediaAdmin.jsx";
+import Guide from "./screens/Guide.jsx";
 import { gGet, gSet } from "./lib/core.js";
 
 /* ---------- Context chung: điều hướng + toast + giáo án của tôi ---------- */
@@ -51,7 +52,8 @@ export default function App() {
     mytopics: <MyTopics key="mytopics" />,
     editor: <Editor key={"editor" + (route.base?.id || "new") + (route.presetGrade || "")} base={route.base} presetGrade={route.presetGrade} />,
     schedule: <Schedule key="schedule" />,
-    mediaAdmin: <MediaAdmin key="mediaAdmin" />
+    mediaAdmin: <MediaAdmin key="mediaAdmin" />,
+    guide: <Guide key="guide" />
   };
 
   return (

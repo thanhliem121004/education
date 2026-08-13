@@ -17,6 +17,7 @@ export default function Topbar() {
         <button className={"navlink" + (["mytopics", "editor"].includes(route.name) ? " now" : "")} onClick={() => go("mytopics")}>Giáo án của tôi</button>
         <button className={"navlink" + (route.name === "schedule" ? " now" : "")} onClick={() => go("schedule")}>Lịch dạy</button>
         <button className={"navlink" + (route.name === "mediaAdmin" ? " now" : "")} onClick={() => go("mediaAdmin")}><Icon name="camera" size={17} /> Quản lý ảnh</button>
+        <button className={"navlink" + (route.name === "guide" ? " now" : "")} onClick={() => go("guide")}><Icon name="bulb" size={17} /> Hướng dẫn</button>
       </nav>
       <nav className="crumbs" aria-label="Vị trí hiện tại">
         {route.name === "topics" && <span className="crumb now">Lớp {route.grade}</span>}
