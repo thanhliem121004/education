@@ -1,4 +1,5 @@
 import { useApp } from "../App.jsx";
+import Icon from "./Icon.jsx";
 
 export default function Topbar() {
   const { route, go } = useApp();
@@ -15,7 +16,7 @@ export default function Topbar() {
         <button className={"navlink" + (inLibrary ? " now" : "")} onClick={() => go("home")}>Kho bài dạy</button>
         <button className={"navlink" + (["mytopics", "editor"].includes(route.name) ? " now" : "")} onClick={() => go("mytopics")}>Giáo án của tôi</button>
         <button className={"navlink" + (route.name === "schedule" ? " now" : "")} onClick={() => go("schedule")}>Lịch dạy</button>
-        <button className={"navlink" + (route.name === "mediaAdmin" ? " now" : "")} onClick={() => go("mediaAdmin")}>📷 Quản lý ảnh</button>
+        <button className={"navlink" + (route.name === "mediaAdmin" ? " now" : "")} onClick={() => go("mediaAdmin")}><Icon name="camera" size={17} /> Quản lý ảnh</button>
       </nav>
       <nav className="crumbs" aria-label="Vị trí hiện tại">
         {route.name === "topics" && <span className="crumb now">Lớp {route.grade}</span>}

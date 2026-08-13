@@ -70,6 +70,20 @@ body::before {
 
 button { font-family: inherit; font-size: inherit; cursor: pointer; }
 
+/* Icon vẽ tay (SVG mực tím) — có thể đè bằng public/icons/<tên>.png */
+.vi-icon {
+  vertical-align: -0.22em;
+  flex-shrink: 0;
+}
+.navlink, .tab-btn, .btn-upload, .btn-url, .btn-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.fallback { color: #b3a1d6; }
+.fallback .fallback-icon { opacity: .8; }
+
 :focus-visible {
   outline: 3px solid var(--vang);
   outline-offset: 2px;

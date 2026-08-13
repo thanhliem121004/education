@@ -25,7 +25,7 @@ export function TopicCard({ topic, onOpen, onEdit, onDelete }) {
       }}
     >
       <span className="tc-cover">
-        <SmartImg srcs={coverSources(topic)} alt={topic.title} fallback={topic.emoji || "📖"} />
+        <SmartImg srcs={coverSources(topic)} alt={topic.title} />
       </span>
       <span className="tc-body">
         <h3>

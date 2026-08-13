@@ -199,6 +199,40 @@ No text, no letters, no watermark, no logo. Landscape orientation 3:2.
 
 ---
 
+## 8. Bộ icon riêng (tuỳ chọn — thư mục `public/icons/`)
+
+Website đã có sẵn bộ **icon vẽ tay nét mực tím** (SVG, không đụng hàng). Nếu thầy cô muốn
+icon phong cách riêng do AI tạo, chỉ cần đặt file **PNG nền trong suốt** vào `public/icons/`
+với đúng tên dưới đây — icon của thầy cô sẽ tự thay bản vẽ tay, không cần sửa code.
+
+### PHONG CÁCH CHUNG CHO ICON (dán kèm mọi prompt icon)
+
+```
+Single hand-drawn doodle icon for a children's education app, drawn with
+a purple ink pen (#6c3bb4), playful slightly wobbly strokes like a school
+notebook sketch, minimal, one object only, centered, TRANSPARENT background,
+no text, no shadow, flat, square 256x256.
+```
+
+| Tên tệp | Icon | Prompt |
+|---|---|---|
+| `camera.png` | Quản lý ảnh | A cute vintage camera doodle |
+| `picture.png` | Khung ảnh | A small framed picture doodle with a tiny sun and hill inside |
+| `upload.png` | Tải tệp lên | An arrow flying up out of an open box doodle |
+| `link.png` | Link URL | Two chain links joined doodle |
+| `spark.png` | Kết nối Supabase | A friendly lightning bolt doodle |
+| `bulb.png` | Gợi ý | A glowing light bulb doodle with small rays |
+| `check.png` | Thành công | A checkmark inside a hand-drawn circle doodle |
+| `warn.png` | Cảnh báo | An exclamation mark inside a hand-drawn triangle doodle |
+| `error.png` | Lỗi | A small x mark inside a hand-drawn circle doodle |
+| `close.png` | Đóng / xoá ảnh | A simple x cross doodle |
+| `refresh.png` | Đặt lại | A circular arrow doodle |
+| `pen.png` | Soạn / sửa | A fountain pen nib doodle |
+| `trash.png` | Xoá | A tiny trash bin doodle |
+
+> Mẹo: tạo cả 13 icon trong cùng một cuộc trò chuyện Gemini để nét vẽ đồng nhất;
+> yêu cầu "transparent background" và tải về dạng PNG.
+
 ## Ghi chú
 
 - Ảnh **1.jpg** của mỗi chủ đề đồng thời là **ảnh bìa** trên thẻ chủ đề.

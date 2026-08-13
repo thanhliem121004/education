@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import TOPICS from "../data/index.js";
 import { useApp } from "../App.jsx";
 import SmartImg from "../components/SmartImg.jsx";
+import Icon from "../components/Icon.jsx";
 import { topicImageSources, coverSources } from "../lib/core.js";
 import { 
   getSupabaseConfig, 
@@ -110,13 +111,13 @@ export default function MediaAdmin() {
             className={"tab-btn" + (activeTab === "topics" ? " active" : "")} 
             onClick={() => setActiveTab("topics")}
           >
-            🖼 Quản lý ảnh bài dạy
+            <Icon name="picture" size={17} /> Quản lý ảnh bài dạy
           </button>
           <button 
             className={"tab-btn" + (activeTab === "supabase" ? " active" : "")} 
             onClick={() => setActiveTab("supabase")}
           >
-            ⚡ Cấu hình Supabase
+            <Icon name="spark" size={17} /> Cấu hình Supabase
           </button>
         </div>
       </div>
@@ -205,13 +206,13 @@ export default function MediaAdmin() {
                             <SmartImg 
                               srcs={srcs} 
                               alt={`${topic.title} slot ${slotIdx}`} 
-                              fallback={topic.emoji || "🖼"} 
+                              fallback={null}
                             />
                           </div>
 
                           <div className="slot-actions">
                             <label className="btn-upload" title="Chọn ảnh từ máy tính">
-                              📁 Tải tệp lên
+                              <Icon name="upload" size={15} /> Tải tệp lên
                               <input 
                                 type="file" 
                                 accept="image/*" 
@@ -224,7 +225,7 @@ export default function MediaAdmin() {
                               title="Nhập link ảnh online"
                               onClick={() => handleUrlInput(topic.id, slotIdx)}
                             >
-                              🔗 Link URL
+                              <Icon name="link" size={15} /> Link URL
                             </button>
                             {isCustom && (
                               <button 
@@ -232,7 +233,7 @@ export default function MediaAdmin() {
                                 title="Xoá ảnh tùy chỉnh"
                                 onClick={() => handleResetSlot(topic.id, slotIdx)}
                               >
-                                ✕
+                                <Icon name="close" size={14} />
                               </button>
                             )}
                           </div>
@@ -251,7 +252,7 @@ export default function MediaAdmin() {
       {activeTab === "supabase" && (
         <div className="supabase-config-section">
           <form className="config-card" onSubmit={handleTestConnection}>
-            <h3>⚡ Kết nối cơ sở dữ liệu & Storage Supabase</h3>
+            <h3><Icon name="spark" size={19} /> Kết nối cơ sở dữ liệu &amp; Storage Supabase</h3>
             <p className="desc">
               Tích hợp Supabase giúp lưu trữ hình ảnh tải lên đám mây, chia sẻ ảnh đồng bộ giữa các máy tính trong trường học. Nếu không cấu hình, ứng dụng vẫn tự động lưu ảnh vào bộ nhớ máy cục bộ (LocalStorage).
             </p>
@@ -299,18 +300,18 @@ export default function MediaAdmin() {
               <div className={"status-box " + (connStatus.ok ? "success" : "error")}>
                 {connStatus.ok ? (
                   <>
-                    <p><b>✅ {connStatus.message || "Kết nối Supabase thành công!"}</b></p>
-                    {connStatus.warning && <p className="warn">⚠️ {connStatus.warning}</p>}
+                    <p><b><Icon name="check" size={16} /> {connStatus.message || "Kết nối Supabase thành công!"}</b></p>
+                    {connStatus.warning && <p className="warn"><Icon name="warn" size={15} /> {connStatus.warning}</p>}
                   </>
                 ) : (
-                  <p><b>❌ Kết nối thất bại:</b> {connStatus.error}</p>
+                  <p><b><Icon name="error" size={15} /> Kết nối thất bại:</b> {connStatus.error}</p>
                 )}
               </div>
             )}
           </form>
 
           <div className="guide-card">
-            <h4>💡 Hướng dẫn 3 bước tạo Bucket Supabase miễn phí:</h4>
+            <h4><Icon name="bulb" size={19} /> Hướng dẫn 3 bước tạo Bucket Supabase miễn phí:</h4>
             <ol>
               <li>Đăng nhập <a href="https://supabase.com" target="_blank" rel="noreferrer">supabase.com</a> và tạo một Dự án (Project) mới.</li>
               <li>Vào mục <b>Storage</b> → Bấm <b>Create a new bucket</b> → Đặt tên là <code>vuon-y-tuong</code> → Bật tùy chọn <b>Public Bucket</b> (bắt buộc để hiển thị ảnh trên web).</li>

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useApp } from "../App.jsx";
 import SmartImg from "../components/SmartImg.jsx";
 import Mindmap from "../components/Mindmap.jsx";
+import Icon from "../components/Icon.jsx";
 import {
   bandOf, tGet, tSet, localImg, coverSources, topicImageSources, youtubeId, beep, BRANCH_COLORS
 } from "../lib/core.js";
@@ -115,7 +116,7 @@ export default function Activity({ topic }) {
       <div className="activity-head">
         <motion.span className="act-cover" initial={{ scale: 0.6, rotate: -6, opacity: 0 }}
           animate={{ scale: 1, rotate: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 260, damping: 18 }}>
-          <SmartImg srcs={coverSources(topic)} fallback={topic.emoji || "📖"} />
+          <SmartImg srcs={coverSources(topic)} />
         </motion.span>
         <div>
           <h2>{topic.title}</h2>
@@ -128,7 +129,7 @@ export default function Activity({ topic }) {
               <button onClick={() => { if (running) setRunning(false); else { if (timerLeft <= 0) setTimerLeft(timerTotal); setTimeUp(false); setRunning(true); } }}>
                 {running ? "Tạm dừng" : "Bắt đầu"}
               </button>
-              <button title="Đặt lại" onClick={() => { setRunning(false); setTimeUp(false); setTimerLeft(timerTotal); }}>↺</button>
+              <button title="Đặt lại" onClick={() => { setRunning(false); setTimeUp(false); setTimerLeft(timerTotal); }}><Icon name="refresh" size={14} /></button>
             </span>
           )}
           <button className="btn green small" onClick={() => { setTimerTotal(300); setTimerLeft(300); setTimeUp(false); setRunning(false); showToast("Đồng hồ 5 phút đã sẵn sàng — bấm Bắt đầu!"); }}>Hẹn 5 phút</button>
@@ -173,7 +174,7 @@ export default function Activity({ topic }) {
               transition={{ delay: i * 0.12, type: "spring", stiffness: 200, damping: 20 }}
               whileHover={{ scale: 1.03, rotate: 0, zIndex: 2 }}
             >
-              <SmartImg srcs={topicImageSources(topic, i + 1)} alt={img.cap || ""} fallback={img.emoji || topic.emoji || "🖼"} />
+              <SmartImg srcs={topicImageSources(topic, i + 1)} alt={img.cap || ""} />
               <figcaption>{img.cap || ""}</figcaption>
             </motion.figure>
           ))}
